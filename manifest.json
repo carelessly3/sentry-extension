@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Sentry Issue Viewer",
+  "version": "1.0",
+  "description": "View and group Sentry issues by assignee and project.",
+  "permissions": ["scripting", "tabs","cookies","storage",
+    "activeTab"],
+  "host_permissions": ["https://*.sentry.io/*"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.sentry.io/*"],
+      "js": ["content.js"]
+    }
+  ]
+}

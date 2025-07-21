@@ -1,0 +1,81 @@
+body {
+  background-color: #241D2A;
+  color: #e0e0e0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  margin: 0;
+  width: 500px;
+}
+
+.header {
+  background-color: #31253bbb;
+  padding: 15px;
+  text-align: center;
+  border-bottom: 1px solid #42364A;
+}
+
+h1 {
+  color: #D6D0DC;
+  font-size: 2em;
+  margin: 0 0 10px;
+}
+
+.button-group {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+button {
+  background-color: #7669D3;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 8px 15px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #8276D6;
+}
+
+#issues {
+  padding: 15px;
+}
+
+h3 {
+  border-bottom: 1px solid #42364A;
+  color: #fff;
+  font-size: 1.2em;
+  margin-top: 20px;
+  padding-bottom: 5px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 10px 0 0;
+  padding: 0 !important;
+}
+
+li {
+  background-color: #31253bbb;
+  border-radius: 5px;
+  margin-bottom: 8px;
+  padding: 8px;
+  transition: background-color 0.3s ease;
+}
+
+li:hover {
+  background-color: #3f304cbb;
+}
+
+a {
+  color: #D6D0DC;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #fff;
+}
