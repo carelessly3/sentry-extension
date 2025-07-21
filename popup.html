@@ -1,20 +1,19 @@
-
-
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Sentry Issue Viewer</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-  <div class="header">
-    <h1>Sentry Issues</h1>
-    <div class="button-group">
-      <button id="fetchBtn">Fetch Issues</button>
-      <button id="clearCache">Refresh</button>
+  <head>
+    <title>Sentry Issue Viewer</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <div class="header">
+      <h1>Sentry Issues</h1>
+      <div class="button-group">
+        <input id="inputDays" type="number" value="30" placeholder="Days" />
+        <button id="fetchBtn">Fetch Issues</button>
+        <button id="clearCache">Clear Cache</button>
+      </div>
     </div>
-  </div>
-  <div id="issues">Click "Fetch Issues" to load.</div>
-  <script src="popup.js"></script>
-</body>
+    <div id="issues">Click "Fetch Issues" to load.</div>
+    <script src="popup.js"></script>
+  </body>
 </html>
