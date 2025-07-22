@@ -1,11 +1,20 @@
-/*
-This script is responsible for fetching issues from Sentry and displaying them in a list.
-*/
+// fill env variables
+const config = {
+  orgSlug: "",
+  cookieUrl: "",
+};
 
-// Fetch issues from Sentry and display them in the popup
-document.getElementById("fetchBtn").addEventListener("click", async () => {
+document.getElementById("inputDays").addEventListener("change", async () => {
+  localStorage.removeItem("issues");
+  const userSelect = document.getElementById("users");
+  userSelect.innerHTML = `<option value="">All Users</option>`;
   const inputDays = document.getElementById("inputDays");
   main({ inputDays });
+});
+
+document.getElementById("users").addEventListener("change", () => {
+  const userSelect = document.getElementById("users");
+  renderIssues(userSelect.value);
 });
 
 // Group issues by assignee and project
@@ -23,19 +32,33 @@ function groupByAssignee(issues) {
 }
 
 // Render issues in the popup
-function renderIssues(grouped) {
+async function renderIssues(user) {
+  const grouped = JSON.parse(localStorage.getItem("issues"));
+
   const container = document.getElementById("issues");
+
   container.innerHTML = ""; // Clear the "loading" message
 
-  if (Object.keys(grouped).length === 0) {
+  if (!grouped || Object.keys(grouped).length === 0) {
     container.innerText = "No unresolved issues found.";
     return;
+  }
+
+  const userSelect = document.getElementById("users");
+
+  if (userSelect.options.length == 1) {
+    for (const user of Object.keys(grouped)) {
+      userSelect.innerHTML += `<option value=${user}>${user}</option>`;
+    }
   }
 
   // Sort assignees alphabetically for consistent order
   const sortedAssignees = Object.keys(grouped).sort();
 
   for (const assignee of sortedAssignees) {
+    if (user && assignee != user) {
+      continue;
+    }
     const issues = grouped[assignee];
     const section = document.createElement("div");
     section.innerHTML = `<h3>${assignee} (${issues.length})</h3>`;
@@ -45,13 +68,14 @@ function renderIssues(grouped) {
 
     issues.forEach((issue) => {
       const el = document.createElement("li");
-      const a = document.createElement("a");
+      const issueButton = document.createElement("a");
 
-      a.href = issue.permalink;
-      a.target = "_blank";
-      a.textContent = `[${issue.project.name}] ${issue.title}`; // this ensures HTML is escaped
+      issueButton.textContent = `[${issue.project.name}] - ${issue.title}`;
+      el.onclick = () => {
+        chrome.tabs.create({ url: issue.permalink, active: false });
+      };
 
-      el.appendChild(a);
+      el.appendChild(issueButton);
       list.appendChild(el);
     });
     section.appendChild(list);
@@ -62,7 +86,9 @@ function renderIssues(grouped) {
 // Clear the data from localStorage
 document.getElementById("clearCache").addEventListener("click", async () => {
   localStorage.removeItem("issues");
-  renderIssues([]);
+  const userSelect = document.getElementById("users");
+  userSelect.innerHTML = `<option value="">All Users</option>`;
+  renderIssues();
 });
 
 function main({ inputDays }) {
@@ -73,10 +99,15 @@ function main({ inputDays }) {
   let issues = localStorage.getItem("issues");
 
   if (issues) {
-    renderIssues(JSON.parse(issues));
+    renderIssues();
   } else {
     chrome.runtime.sendMessage(
-      { action: "fetch_issues", statsPeriod: inputDays.value },
+      {
+        action: "fetch_issues",
+        statsPeriod: inputDays.value,
+        orgSlug: config.orgSlug,
+        cookieUrl: config.cookieUrl,
+      },
       (response) => {
         // Handle any messaging errors
         if (chrome.runtime.lastError) {
@@ -93,10 +124,15 @@ function main({ inputDays }) {
           return;
         }
 
-        const grouped = groupByAssignee(response.issues);
-        localStorage.setItem("issues", JSON.stringify(grouped));
-        renderIssues(grouped);
+        localStorage.setItem(
+          "issues",
+          JSON.stringify(groupByAssignee(response.issues))
+        );
+        renderIssues();
       }
     );
   }
 }
+
+const inputDays = document.getElementById("inputDays");
+main({ inputDays });
