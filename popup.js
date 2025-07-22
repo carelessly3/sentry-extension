@@ -4,14 +4,6 @@ const config = {
   cookieUrl: "",
 };
 
-document.getElementById("inputDays").addEventListener("change", async () => {
-  localStorage.removeItem("issues");
-  const userSelect = document.getElementById("users");
-  userSelect.innerHTML = `<option value="">All Users</option>`;
-  const inputDays = document.getElementById("inputDays");
-  main({ inputDays });
-});
-
 document.getElementById("users").addEventListener("change", () => {
   const userSelect = document.getElementById("users");
   renderIssues(userSelect.value);
@@ -46,14 +38,13 @@ async function renderIssues(user) {
 
   const userSelect = document.getElementById("users");
 
+  const sortedAssignees = Object.keys(grouped).sort();
+
   if (userSelect.options.length == 1) {
-    for (const user of Object.keys(grouped)) {
+    for (const user of sortedAssignees) {
       userSelect.innerHTML += `<option value=${user}>${user}</option>`;
     }
   }
-
-  // Sort assignees alphabetically for consistent order
-  const sortedAssignees = Object.keys(grouped).sort();
 
   for (const assignee of sortedAssignees) {
     if (user && assignee != user) {
@@ -83,15 +74,17 @@ async function renderIssues(user) {
   }
 }
 
-// Clear the data from localStorage
-document.getElementById("clearCache").addEventListener("click", async () => {
+document.getElementById("reload").addEventListener("click", async () => {
   localStorage.removeItem("issues");
   const userSelect = document.getElementById("users");
   userSelect.innerHTML = `<option value="">All Users</option>`;
-  renderIssues();
+  const inputDays = document.getElementById("inputDays");
+  main({ inputDays });
 });
 
 function main({ inputDays }) {
+  localStorage.setItem("inputDaysCache", inputDays.value);
+
   const issuesContainer = document.getElementById("issues");
 
   issuesContainer.innerText = "Fetching issues, please wait...";
@@ -134,5 +127,12 @@ function main({ inputDays }) {
   }
 }
 
+const inputDaysCache = localStorage.getItem("inputDaysCache");
+
 const inputDays = document.getElementById("inputDays");
+
+if (inputDaysCache) {
+  inputDays.value = inputDaysCache;
+}
+
 main({ inputDays });

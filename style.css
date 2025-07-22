@@ -122,7 +122,7 @@ input[type="number"] {
   color: #e0e0e0;
   font-size: 1.2em;
   padding: 8px 12px;
-  width: 160px;
+  width: 240px;
   box-sizing: border-box;
   appearance: none;
   transition: border-color 0.3s ease, background-color 0.3s ease;
@@ -135,6 +135,10 @@ input:focus {
   outline: none;
 }
 
+#inputDays {
+  max-width: 100px;
+}
+
 select:hover {
   background-color: #4a3a5c;
 }
@@ -144,4 +148,5 @@ label {
   font-size: 1em;
   margin-right: 5px;
   block-size: auto;
+  padding-top: 10px;
 }
