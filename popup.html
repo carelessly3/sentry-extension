@@ -8,9 +8,15 @@
     <div class="header">
       <h1>Sentry Issues</h1>
       <div class="button-group">
-        <input id="inputDays" type="number" value="30" placeholder="Days" />
-        <button id="fetchBtn">Fetch Issues</button>
-        <button id="clearCache">Clear Cache</button>
+        <label for="users">Choose a user:</label>
+        <select name="users" id="users">
+          <option value="">All Users</option>
+        </select>
+        <div>
+          <label for="inputDays">Days:</label>
+          <input id="inputDays" type="text" value="30" placeholder="Days" />
+        </div>
+        <button id="reload">Reload</button>
       </div>
     </div>
     <div id="issues">Click "Fetch Issues" to load.</div>

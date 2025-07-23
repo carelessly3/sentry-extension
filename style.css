@@ -1,7 +1,8 @@
 body {
-  background-color: #241D2A;
+  background-color: #241d2a;
   color: #e0e0e0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
   margin: 0;
   width: 500px;
 }
@@ -10,11 +11,11 @@ body {
   background-color: #31253bbb;
   padding: 15px;
   text-align: center;
-  border-bottom: 1px solid #42364A;
+  border-bottom: 1px solid #42364a;
 }
 
 h1 {
-  color: #D6D0DC;
+  color: #d6d0dc;
   font-size: 2em;
   margin: 0 0 10px;
 }
@@ -26,7 +27,7 @@ h1 {
 }
 
 button {
-  background-color: #7669D3;
+  background-color: #7669d3;
   border: none;
   border-radius: 5px;
   color: #fff;
@@ -37,7 +38,7 @@ button {
 }
 
 button:hover {
-  background-color: #8276D6;
+  background-color: #8276d6;
 }
 
 #issues {
@@ -45,7 +46,7 @@ button:hover {
 }
 
 h3 {
-  border-bottom: 1px solid #42364A;
+  border-bottom: 1px solid #42364a;
   color: #fff;
   font-size: 1.2em;
   margin-top: 20px;
@@ -64,6 +65,9 @@ li {
   margin-bottom: 8px;
   padding: 8px;
   transition: background-color 0.3s ease;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
 li:hover {
@@ -71,7 +75,7 @@ li:hover {
 }
 
 a {
-  color: #D6D0DC;
+  color: #d6d0dc;
   text-decoration: none;
   transition: color 0.3s ease;
 }
@@ -94,7 +98,55 @@ input[type="number"] {
 
 input[type="text"]:focus,
 input[type="number"]:focus {
-  border-color: #7669D3;
+  border-color: #7669d3;
   background-color: #4a3a5c;
   outline: none;
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  padding: 10px;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+select,
+input[type="text"],
+input[type="number"] {
+  background-color: #3a2e49;
+  border: 1px solid #57476a;
+  border-radius: 5px;
+  color: #e0e0e0;
+  font-size: 1.2em;
+  padding: 8px 12px;
+  width: 240px;
+  box-sizing: border-box;
+  appearance: none;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+select:focus,
+input:focus {
+  border-color: #7669d3;
+  background-color: #4a3a5c;
+  outline: none;
+}
+
+#inputDays {
+  max-width: 100px;
+}
+
+select:hover {
+  background-color: #4a3a5c;
+}
+
+label {
+  color: #e0e0e0;
+  font-size: 1em;
+  margin-right: 5px;
+  block-size: auto;
+  padding-top: 10px;
 }

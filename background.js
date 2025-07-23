@@ -4,7 +4,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "fetch_issues") {
     // This function runs asynchronously and will call sendResponse when done.
     (async () => {
-      const orgSlug = "";
+      const orgSlug = request.orgSlug;
       const sentryApiBase = "https://us.sentry.io/api/0";
 
       try {
@@ -12,7 +12,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         const cookie = await new Promise((resolve, reject) => {
           chrome.cookies.get(
             {
-              url: "",
+              url: request.cookieUrl,
               name: "session",
             },
             (cookie) => {
